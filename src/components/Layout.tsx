@@ -12,30 +12,30 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-background">
+      <div className="min-h-screen flex w-full bg-white">
         <AppSidebar />
         
         <div className="flex-1 flex flex-col">
           {/* Top Navigation */}
-          <header className="border-b bg-card">
+          <header className="border-b bg-white border-gray-200 shadow-sm">
             <div className="flex items-center justify-between px-6 py-3">
               <div className="flex items-center gap-4">
                 <SidebarTrigger className="lg:hidden" />
                 <div className="hidden md:flex items-center gap-2 max-w-md flex-1">
-                  <Search className="h-4 w-4 text-muted-foreground" />
+                  <Search className="h-4 w-4 text-gray-500" />
                   <Input 
                     placeholder="Buscar matérias, tópicos..." 
-                    className="border-0 shadow-none focus-visible:ring-0"
+                    className="border-0 shadow-none focus-visible:ring-0 bg-gray-50"
                   />
                 </div>
               </div>
               
               <div className="flex items-center gap-3">
-                <Button variant="ghost" size="icon">
-                  <Bell className="h-4 w-4" />
+                <Button variant="ghost" size="icon" className="hover:bg-gray-100">
+                  <Bell className="h-4 w-4 text-gray-600" />
                 </Button>
                 <Avatar className="h-8 w-8">
-                  <AvatarFallback className="bg-primary text-primary-foreground text-sm">
+                  <AvatarFallback className="bg-indigo-600 text-white text-sm">
                     U
                   </AvatarFallback>
                 </Avatar>

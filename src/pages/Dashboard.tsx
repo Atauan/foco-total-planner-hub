@@ -57,15 +57,15 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className={`border-b bg-card shadow-sm transition-all duration-700 ease-out ${showContent ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}`}>
+      <div className={`border-b bg-white shadow-sm border-gray-200 transition-all duration-700 ease-out ${showContent ? 'translate-y-0 opacity-100' : '-translate-y-4 opacity-0'}`}>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 gap-4">
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-foreground">Bom dia! 👋</h1>
-            <p className="text-sm sm:text-base text-muted-foreground">Continue seu progresso de estudos</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-black">Bom dia! 👋</h1>
+            <p className="text-sm sm:text-base text-gray-600">Continue seu progresso de estudos</p>
           </div>
-          <Button className="bg-primary hover:bg-primary/90 hover:scale-105 transition-all duration-200 w-full sm:w-auto animate-pulse">
+          <Button className="bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition-all duration-200 w-full sm:w-auto text-white font-medium shadow-md">
             <Plus className="h-4 w-4 mr-2" />
             Nova Atividade
           </Button>
@@ -76,26 +76,26 @@ export default function Dashboard() {
         {/* Progress Overview */}
         <div className={`space-y-4 transition-all duration-700 ease-out delay-100 ${showContent ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground">Progresso do Plano de Estudos</h2>
-            <Badge variant="outline" className="text-warning border-warning/50 text-xs sm:text-sm w-fit">
+            <h2 className="text-lg sm:text-xl font-semibold text-black">Progresso do Plano de Estudos</h2>
+            <Badge variant="outline" className="text-amber-600 border-amber-300 bg-amber-50 text-xs sm:text-sm w-fit">
               4 meses e 15 dias até o ENEM
             </Badge>
           </div>
           
-          <div className="bg-card rounded-xl p-4 sm:p-6 shadow-elevated hover:shadow-lg transition-shadow duration-300">
+          <div className="bg-white rounded-xl p-4 sm:p-6 shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
               <div>
-                <h3 className="font-medium text-foreground">Progresso Geral</h3>
-                <p className="text-sm text-muted-foreground">32% concluído do cronograma</p>
+                <h3 className="font-medium text-black">Progresso Geral</h3>
+                <p className="text-sm text-gray-600">32% concluído do cronograma</p>
               </div>
               <div className="text-left sm:text-right">
-                <p className="text-xl sm:text-2xl font-bold text-foreground">32%</p>
-                <p className="text-sm text-success">+8% esta semana</p>
+                <p className="text-xl sm:text-2xl font-bold text-black">32%</p>
+                <p className="text-sm text-green-600">+8% esta semana</p>
               </div>
             </div>
-            <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
+            <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
               <div 
-                className="bg-primary h-3 rounded-full transition-all duration-1000 ease-out"
+                className="bg-indigo-600 h-3 rounded-full transition-all duration-1000 ease-out"
                 style={{width: `${progressWidth}%`}}
               ></div>
             </div>
@@ -143,11 +143,11 @@ export default function Dashboard() {
         {/* Today's Schedule */}
         <div className={`space-y-4 transition-all duration-700 ease-out delay-600 ${showContent ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <h2 className="text-lg sm:text-xl font-semibold text-foreground flex items-center gap-2">
+            <h2 className="text-lg sm:text-xl font-semibold text-black flex items-center gap-2">
               <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
               Cronograma de Hoje
             </h2>
-            <Button variant="outline" size="sm" className="w-fit hover:bg-muted transition-colors">
+            <Button variant="outline" size="sm" className="w-fit hover:bg-gray-50 border-gray-300 text-gray-700 transition-colors">
               Ver Cronograma Completo
             </Button>
           </div>
@@ -166,18 +166,18 @@ export default function Dashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className={`bg-gradient-focus rounded-xl p-4 sm:p-6 text-white transition-all duration-700 ease-out delay-1000 hover:scale-[1.02] ${showContent ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+        <div className={`bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-4 sm:p-6 text-white transition-all duration-700 ease-out delay-1000 hover:scale-[1.02] shadow-lg ${showContent ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h3 className="text-base sm:text-lg font-semibold mb-2">Continue seus estudos</h3>
               <p className="opacity-90 text-sm sm:text-base">Você está indo muito bem! Continue assim.</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-              <Button variant="secondary" size="sm" className="w-full sm:w-auto hover:scale-105 transition-transform">
+              <Button variant="secondary" size="sm" className="w-full sm:w-auto hover:scale-105 transition-transform bg-white text-indigo-600 hover:bg-gray-50">
                 <Trophy className="h-4 w-4 mr-2" />
                 Ver Conquistas
               </Button>
-              <Button variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10 hover:scale-105 transition-all w-full sm:w-auto">
+              <Button variant="outline" size="sm" className="border-white/30 text-white hover:bg-white/10 hover:scale-105 transition-all w-full sm:w-auto">
                 <TrendingUp className="h-4 w-4 mr-2" />
                 Relatório
               </Button>

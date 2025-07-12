@@ -57,21 +57,21 @@ export function AppSidebar() {
   const getNavClasses = (path: string) => {
     const baseClasses = "w-full justify-start transition-colors"
     return isActive(path) 
-      ? `${baseClasses} bg-primary text-primary-foreground font-medium` 
-      : `${baseClasses} hover:bg-muted`
+      ? `${baseClasses} bg-indigo-600 text-white font-medium` 
+      : `${baseClasses} hover:bg-gray-100 text-gray-700`
   }
 
   return (
-    <Sidebar className={collapsed ? "w-16" : "w-64"} collapsible="icon">
-      <SidebarHeader className="p-4 border-b">
+    <Sidebar className={`${collapsed ? "w-16" : "w-64"} bg-white border-r border-gray-200`} collapsible="icon">
+      <SidebarHeader className="p-4 border-b border-gray-200">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">FT</span>
           </div>
           {!collapsed && (
             <div>
-              <h2 className="font-bold text-lg text-foreground">FocoTotal</h2>
-              <p className="text-xs text-muted-foreground">Sua plataforma de estudos</p>
+              <h2 className="font-bold text-lg text-black">FocoTotal</h2>
+              <p className="text-xs text-gray-600">Sua plataforma de estudos</p>
             </div>
           )}
         </div>

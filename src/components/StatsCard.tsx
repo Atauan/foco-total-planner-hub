@@ -14,17 +14,17 @@ interface StatsCardProps {
 }
 
 const variantClasses = {
-  default: "border-border",
-  primary: "border-primary/20 bg-primary/5",
-  success: "border-success/20 bg-success/5",
-  warning: "border-warning/20 bg-warning/5"
+  default: "border-gray-200 bg-white",
+  primary: "border-indigo-200 bg-indigo-50",
+  success: "border-green-200 bg-green-50",
+  warning: "border-amber-200 bg-amber-50"
 }
 
 const iconClasses = {
-  default: "text-muted-foreground",
-  primary: "text-primary",
-  success: "text-success",
-  warning: "text-warning"
+  default: "text-gray-500",
+  primary: "text-indigo-600",
+  success: "text-green-600",
+  warning: "text-amber-600"
 }
 
 export function StatsCard({ 
@@ -35,15 +35,15 @@ export function StatsCard({
   variant = "default" 
 }: StatsCardProps) {
   return (
-    <Card className={`shadow-card hover:shadow-elevated transition-all duration-300 hover:scale-[1.02] ${variantClasses[variant]}`}>
+    <Card className={`shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] border ${variantClasses[variant]}`}>
       <CardContent className="p-3 sm:p-4 md:p-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1 min-w-0 flex-1">
-            <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">{title}</p>
-            <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">{value}</p>
+            <p className="text-xs sm:text-sm font-medium text-gray-600 truncate">{title}</p>
+            <p className="text-lg sm:text-xl md:text-2xl font-bold text-black">{value}</p>
             {trend && (
-              <p className="text-xs text-muted-foreground">
-                <span className={trend.isPositive ? "text-success" : "text-destructive"}>
+              <p className="text-xs text-gray-600">
+                <span className={trend.isPositive ? "text-green-600" : "text-red-600"}>
                   {trend.isPositive ? "+" : ""}{trend.value}%
                 </span>{" "}
                 <span className="hidden sm:inline">{trend.label}</span>
