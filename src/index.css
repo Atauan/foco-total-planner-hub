@@ -2,152 +2,102 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Design System Minimalista - Inspirado em Linear.app, Notion e Apple */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 255 255 255;
-    --foreground: 0 0 0;
+    /* Core Colors - Minimalista */
+    --background: 255 255 255; /* #FFFFFF */
+    --foreground: 0 0 0; /* #000000 */
+    --border: 31 41 55; /* #1F2937 */
+    --border-light: 55 65 81; /* #374151 */
+    --muted: 249 250 251; /* #F9FAFB */
+    --muted-foreground: 107 114 128; /* #6B7280 */
+    
+    /* Neutral Grays */
+    --gray-50: 249 250 251;
+    --gray-100: 243 244 246;
+    --gray-200: 229 231 235;
+    --gray-300: 209 213 219;
+    --gray-400: 156 163 175;
+    --gray-500: 107 114 128;
+    --gray-600: 75 85 99;
+    --gray-700: 55 65 81;
+    --gray-800: 31 41 55;
+    --gray-900: 17 24 39;
 
-    --card: 255 255 255;
-    --card-foreground: 0 0 0;
-
-    --popover: 255 255 255;
-    --popover-foreground: 0 0 0;
-
-    --primary: 99 102 241;
-    --primary-foreground: 255 255 255;
-
-    --secondary: 243 244 246;
-    --secondary-foreground: 75 85 99;
-
-    --muted: 249 250 251;
-    --muted-foreground: 107 114 128;
-
-    --accent: 59 130 246;
+    /* Accent - Minimal */
+    --accent: 0 0 0; /* Pure black for minimal accent */
     --accent-foreground: 255 255 255;
 
-    --destructive: 239 68 68;
-    --destructive-foreground: 255 255 255;
+    /* Shadows */
+    --shadow-minimal: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+    --shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
 
-    --border: 209 213 219;
-    --input: 209 213 219;
-    --ring: 99 102 241;
-
-    --success: 34 197 94;
-    --success-foreground: 255 255 255;
-
-    --warning: 245 158 11;
-    --warning-foreground: 255 255 255;
-
-    --info: 59 130 246;
-    --info-foreground: 255 255 255;
-
-    --focus: 99 102 241;
-    --focus-foreground: 255 255 255;
-
-    --gradient-primary: linear-gradient(135deg, hsl(99 102 241), hsl(139 92 246));
-    --gradient-success: linear-gradient(135deg, hsl(34 197 94), hsl(16 185 129));
-    --gradient-focus: linear-gradient(135deg, hsl(99 102 241), hsl(59 130 246));
-
-    --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-elevated: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -1px rgb(0 0 0 / 0.06);
-
-    --radius: 0.75rem;
-
-    --sidebar-background: 255 255 255;
-
-    --sidebar-foreground: 0 0 0;
-
-    --sidebar-primary: 99 102 241;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 243 244 246;
-
-    --sidebar-accent-foreground: 0 0 0;
-
-    --sidebar-border: 209 213 219;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 0 0 0;
-    --foreground: 255 255 255;
-
-    --card: 24 24 27;
-    --card-foreground: 255 255 255;
-
-    --popover: 24 24 27;
-    --popover-foreground: 255 255 255;
-
-    --primary: 99 102 241;
-    --primary-foreground: 255 255 255;
-
-    --secondary: 39 39 42;
-    --secondary-foreground: 255 255 255;
-
-    --muted: 39 39 42;
-    --muted-foreground: 161 161 170;
-
-    --accent: 39 39 42;
-    --accent-foreground: 255 255 255;
-
-    --destructive: 239 68 68;
-    --destructive-foreground: 255 255 255;
-
-    --border: 39 39 42;
-    --input: 39 39 42;
-    --ring: 99 102 241;
-    --sidebar-background: 24 24 27;
-    --sidebar-foreground: 255 255 255;
-    --sidebar-primary: 99 102 241;
-    --sidebar-primary-foreground: 255 255 255;
-    --sidebar-accent: 39 39 42;
-    --sidebar-accent-foreground: 255 255 255;
-    --sidebar-border: 39 39 42;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --radius: 8px;
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-gray-800;
   }
 
   body {
     @apply bg-white text-black font-sans antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   }
 
-  /* Melhorias de legibilidade */
+  /* Typography - Minimalista */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold text-black;
+    @apply font-semibold text-black tracking-tight;
   }
 
   p {
     @apply text-gray-700 leading-relaxed;
   }
 
-  /* Cards com bordas mais definidas */
-  .card-clean {
-    @apply bg-white rounded-lg shadow-md border border-gray-200 transition-all duration-200 hover:shadow-lg;
+  /* Cards Minimalistas */
+  .card-minimal {
+    @apply bg-white rounded-lg border border-gray-800/10 transition-all duration-300;
+    box-shadow: var(--shadow-card);
   }
 
-  /* Botões com melhor contraste */
-  .btn-primary {
-    @apply bg-indigo-600 text-white py-2 px-4 rounded-lg shadow-md hover:bg-indigo-700 transition-all duration-200 font-medium;
+  .card-minimal:hover {
+    @apply border-gray-800/20;
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-1px);
   }
 
-  /* Animações suaves */
+  /* Botões Minimalistas */
+  .btn-minimal {
+    @apply bg-black text-white px-4 py-2 rounded-lg font-medium transition-all duration-200;
+    box-shadow: var(--shadow-minimal);
+  }
+
+  .btn-minimal:hover {
+    @apply bg-gray-900 scale-[1.02];
+    box-shadow: var(--shadow-card);
+  }
+
+  .btn-minimal:active {
+    @apply scale-[0.98];
+  }
+
+  /* Animações Suaves */
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out forwards;
+    animation: fadeIn 0.8s ease-out forwards;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.8s ease-out forwards;
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-pulse-subtle {
+    animation: pulseSubtle 2s ease-in-out infinite;
   }
 
   @keyframes fadeIn {
@@ -169,6 +119,42 @@ All colors MUST be HSL.
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  @keyframes pulseSubtle {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+    }
+    50% {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  /* Progress Bar */
+  .progress-bar {
+    @apply bg-black h-2 rounded-full transition-all duration-1000 ease-out;
+  }
+
+  /* Sidebar */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 hover:text-black transition-all duration-200;
+  }
+
+  .sidebar-item.active {
+    @apply bg-black text-white;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .mobile-hidden {
+      @apply hidden;
+    }
+    
+    .mobile-full {
+      @apply w-full;
     }
   }
 }
