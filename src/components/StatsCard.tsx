@@ -35,22 +35,22 @@ export function StatsCard({
   variant = "default" 
 }: StatsCardProps) {
   return (
-    <Card className={`shadow-card ${variantClasses[variant]}`}>
-      <CardContent className="p-6">
+    <Card className={`shadow-card hover:shadow-elevated transition-all duration-300 hover:scale-[1.02] ${variantClasses[variant]}`}>
+      <CardContent className="p-3 sm:p-4 md:p-6">
         <div className="flex items-center justify-between">
-          <div className="space-y-1">
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className="text-2xl font-bold text-foreground">{value}</p>
+          <div className="space-y-1 min-w-0 flex-1">
+            <p className="text-xs sm:text-sm font-medium text-muted-foreground truncate">{title}</p>
+            <p className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">{value}</p>
             {trend && (
               <p className="text-xs text-muted-foreground">
                 <span className={trend.isPositive ? "text-success" : "text-destructive"}>
                   {trend.isPositive ? "+" : ""}{trend.value}%
                 </span>{" "}
-                {trend.label}
+                <span className="hidden sm:inline">{trend.label}</span>
               </p>
             )}
           </div>
-          <Icon className={`h-8 w-8 ${iconClasses[variant]}`} />
+          <Icon className={`h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 ${iconClasses[variant]} flex-shrink-0`} />
         </div>
       </CardContent>
     </Card>
