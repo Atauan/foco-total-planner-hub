@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import { Layout } from "@/components/Layout"
 import { 
   Calculator, 
   Microscope, 
@@ -94,55 +95,57 @@ export default function Materias() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Header Section */}
-        <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-4xl font-semibold text-black mb-4 tracking-tight">
-            Matérias
-          </h1>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Consulte o material de apoio, questões e assuntos de cada disciplina.
-          </p>
-        </div>
+    <Layout>
+      <div className="min-h-screen bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Header Section */}
+          <div className="text-center mb-12 animate-fade-in">
+            <h1 className="text-4xl font-semibold text-black mb-4 tracking-tight">
+              Matérias
+            </h1>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              Consulte o material de apoio, questões e assuntos de cada disciplina.
+            </p>
+          </div>
 
-        {/* Subjects Sections */}
-        <div className="space-y-16">
-          {materiasData.map((categoria, categoriaIndex) => (
-            <div key={categoria.title} className="animate-section-title">
-              <h2 className="text-2xl font-semibold text-black mb-8 text-center lg:text-left">
-                {categoria.title}
-              </h2>
-              
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
-                {categoria.sections.map((materia, materiaIndex) => {
-                  const IconComponent = materia.icon
-                  const globalIndex = categoriaIndex * 10 + materiaIndex
-                  
-                  return (
-                    <div 
-                      key={materia.name}
-                      className="animate-materia-card group cursor-pointer"
-                    >
-                      <div className="card-minimal p-6 text-center hover:shadow-elevated transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-gray-50">
-                        <div className="mb-4 flex justify-center">
-                          <IconComponent className="h-8 w-8 text-gray-700 group-hover:text-black transition-colors duration-200" />
+          {/* Subjects Sections */}
+          <div className="space-y-16">
+            {materiasData.map((categoria, categoriaIndex) => (
+              <div key={categoria.title} className="animate-section-title">
+                <h2 className="text-2xl font-semibold text-black mb-8 text-center lg:text-left">
+                  {categoria.title}
+                </h2>
+                
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 lg:gap-6">
+                  {categoria.sections.map((materia, materiaIndex) => {
+                    const IconComponent = materia.icon
+                    const globalIndex = categoriaIndex * 10 + materiaIndex
+                    
+                    return (
+                      <div 
+                        key={materia.name}
+                        className="animate-materia-card group cursor-pointer"
+                      >
+                        <div className="card-minimal p-6 text-center hover:shadow-elevated transition-all duration-300 group-hover:-translate-y-1 group-hover:bg-gray-50">
+                          <div className="mb-4 flex justify-center">
+                            <IconComponent className="h-8 w-8 text-gray-700 group-hover:text-black transition-colors duration-200" />
+                          </div>
+                          <h3 className="font-medium text-black text-sm lg:text-base leading-tight">
+                            {materia.name}
+                          </h3>
                         </div>
-                        <h3 className="font-medium text-black text-sm lg:text-base leading-tight">
-                          {materia.name}
-                        </h3>
                       </div>
-                    </div>
-                  )
-                })}
+                    )
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* Bottom spacing */}
-        <div className="h-16"></div>
+          {/* Bottom spacing */}
+          <div className="h-16"></div>
+        </div>
       </div>
-    </div>
+    </Layout>
   )
 }
