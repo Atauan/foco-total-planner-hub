@@ -1,4 +1,5 @@
 import { useState, ReactNode } from "react"
+import { useAuth } from "@/contexts/AuthContext"
 import { 
   Calendar, 
   BookOpen, 
@@ -6,8 +7,11 @@ import {
   Trophy,
   TrendingUp,
   Menu,
-  X
+  X,
+  Settings,
+  LogOut
 } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 interface LayoutProps {
   children: ReactNode
@@ -15,6 +19,7 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { userData, signOut, isAdmin } = useAuth()
 
   const getCurrentPage = () => {
     const path = window.location.pathname
@@ -29,6 +34,8 @@ export function Layout({ children }: LayoutProps) {
         return "Questões"
       case "/conquistas":
         return "Conquistas"
+      case "/admin":
+        return "Painel Admin"
       default:
         return "Dashboard"
     }
@@ -96,7 +103,40 @@ export function Layout({ children }: LayoutProps) {
             <Trophy className="h-5 w-5" />
             <span>Conquistas</span>
           </a>
+          {isAdmin && (
+            <a 
+              href="/admin" 
+              className={`sidebar-item ${isActivePage("Painel Admin") ? "active" : ""}`}
+            >
+              <Settings className="h-5 w-5" />
+              <span>Painel Admin</span>
+            </a>
+          )}
         </nav>
+        
+        {/* User Info & Logout */}
+        <div className="mt-auto p-4 border-t border-gray-800/10">
+          <div className="space-y-3">
+            <div className="text-sm">
+              <p className="font-medium text-black truncate">{userData?.nome}</p>
+              <p className="text-xs text-gray-500 truncate">{userData?.email}</p>
+              {userData?.tipo === 'aluno' && userData?.data_validade && (
+                <p className="text-xs text-gray-500">
+                  Válido até: {new Date(userData.data_validade).toLocaleDateString('pt-BR')}
+                </p>
+              )}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={signOut}
+              className="w-full border-gray-800/20 hover:bg-gray-50 text-gray-700"
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Sair
+            </Button>
+          </div>
+        </div>
       </div>
 
       {/* Overlay for mobile */}
