@@ -149,7 +149,7 @@ export default function Dashboard() {
             <Calendar className="h-5 w-5" />
             <span>Cronograma</span>
           </a>
-          <a href="#" className="sidebar-item">
+          <a href="/materias" className="sidebar-item">
             <BookOpen className="h-5 w-5" />
             <span>Matérias</span>
           </a>
