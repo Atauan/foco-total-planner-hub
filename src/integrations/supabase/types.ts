@@ -14,13 +14,101 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      logs_acesso: {
+        Row: {
+          created_at: string
+          detalhes: Json | null
+          id: string
+          tipo_acao: string
+          usuario_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          detalhes?: Json | null
+          id?: string
+          tipo_acao: string
+          usuario_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          detalhes?: Json | null
+          id?: string
+          tipo_acao?: string
+          usuario_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "logs_acesso_usuario_id_fkey"
+            columns: ["usuario_id"]
+            isOneToOne: false
+            referencedRelation: "usuarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      usuarios: {
+        Row: {
+          ativo: boolean
+          auth_user_id: string | null
+          created_at: string
+          criado_por: string | null
+          data_validade: string | null
+          email: string
+          id: string
+          nome: string
+          plano: string | null
+          tipo: string
+          ultimo_acesso: string | null
+        }
+        Insert: {
+          ativo?: boolean
+          auth_user_id?: string | null
+          created_at?: string
+          criado_por?: string | null
+          data_validade?: string | null
+          email: string
+          id?: string
+          nome: string
+          plano?: string | null
+          tipo?: string
+          ultimo_acesso?: string | null
+        }
+        Update: {
+          ativo?: boolean
+          auth_user_id?: string | null
+          created_at?: string
+          criado_por?: string | null
+          data_validade?: string | null
+          email?: string
+          id?: string
+          nome?: string
+          plano?: string | null
+          tipo?: string
+          ultimo_acesso?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_random_password: {
+        Args: { length?: number }
+        Returns: string
+      }
+      gerar_senha_aleatoria: {
+        Args: { tamanho?: number }
+        Returns: string
+      }
+      is_user_active: {
+        Args: { user_id: string }
+        Returns: boolean
+      }
+      usuario_ativo: {
+        Args: { user_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
