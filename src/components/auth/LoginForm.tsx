@@ -35,13 +35,18 @@ export function LoginForm() {
     setIsLoading(true)
     setError('')
 
-    const result = await signIn(data.email, data.password)
-    
-    if (result.error) {
-      setError(result.error)
+    try {
+      const result = await signIn(data.email, data.password)
+      
+      if (result.error) {
+        setError(result.error)
+      }
+    } catch (error) {
+      setError('Erro inesperado ao fazer login')
+      console.error('Erro no login:', error)
+    } finally {
+      setIsLoading(false)
     }
-    
-    setIsLoading(false)
   }
 
   return (

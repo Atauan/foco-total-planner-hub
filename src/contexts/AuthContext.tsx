@@ -48,7 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .single()
 
       if (error) {
-        console.error('Erro ao buscar dados do usuário:', error)
+        console.error('Erro ao buscar dados do usuário:', error.message)
         return null
       }
 
@@ -61,19 +61,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updateLastAccess = async (userId: string) => {
     try {
-      await supabase
+      const { error } = await supabase
         .from('usuarios')
         .update({ ultimo_acesso: new Date().toISOString() })
-        .eq('auth_user_id', userId)
+        .eq('id', userId)
 
-      // Log do acesso
-      await supabase
-        .from('logs_acesso')
-        .insert({
-          usuario_id: userId,
-          tipo_acao: 'login',
-          detalhes: { timestamp: new Date().toISOString() }
-        })
+      if (error) {
+        console.error('Erro ao atualizar último acesso:', error.message)
+      }
     } catch (error) {
       console.error('Erro ao atualizar último acesso:', error)
     }
@@ -81,31 +76,52 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     // Verificar sessão atual
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null)
-      if (session?.user) {
-        fetchUserData(session.user.id).then(data => {
-          setUserData(data)
-          if (data) {
-            updateLastAccess(session.user.id)
-          }
-        })
-      }
-      setLoading(false)
-    })
+    const initializeAuth = async () => {
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession()
+        
+        if (error) {
+          console.error('Erro ao obter sessão:', error.message)
+          setLoading(false)
+          return
+        }
 
-    // Escutar mudanças de autenticação
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
         setUser(session?.user ?? null)
         
         if (session?.user) {
-          const data = await fetchUserData(session.user.id)
-          setUserData(data)
-          if (data && event === 'SIGNED_IN') {
-            updateLastAccess(session.user.id)
+          const userData = await fetchUserData(session.user.id)
+          setUserData(userData)
+          
+          if (userData) {
+            await updateLastAccess(userData.id)
           }
-        } else {
+        }
+      } catch (error) {
+        console.error('Erro na inicialização da auth:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    initializeAuth()
+  }, [])
+
+  useEffect(() => {
+    // Escutar mudanças de autenticação
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        console.log('Auth state changed:', event, session?.user?.email)
+        
+        setUser(session?.user ?? null)
+        
+        if (session?.user && event === 'SIGNED_IN') {
+          const userData = await fetchUserData(session.user.id)
+          setUserData(userData)
+          
+          if (userData) {
+            await updateLastAccess(userData.id)
+          }
+        } else if (event === 'SIGNED_OUT') {
           setUserData(null)
         }
         
@@ -118,23 +134,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const { error } = await supabase.auth.signInWithPassword({
+      setLoading(true)
+      
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
 
       if (error) {
+        console.error('Erro no login:', error.message)
         return { error: error.message }
       }
 
+      // O onAuthStateChange vai lidar com o resto
       return {}
     } catch (error) {
+      console.error('Erro no login:', error)
       return { error: 'Erro ao fazer login' }
+    } finally {
+      setLoading(false)
     }
   }
 
   const signUp = async (email: string, password: string, nome: string) => {
     try {
+      setLoading(true)
+      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -147,12 +172,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       })
 
       if (error) {
+        console.error('Erro no cadastro:', error.message)
         return { error: error.message }
       }
 
-      // Criar registro na tabela usuarios
+      // Criar registro na tabela usuarios se o usuário foi criado
       if (data.user) {
-        await supabase
+        const { error: insertError } = await supabase
           .from('usuarios')
           .insert({
             auth_user_id: data.user.id,
@@ -162,16 +188,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             ativo: true,
             criado_por: 'manual'
           })
+          
+        if (insertError) {
+          console.error('Erro ao criar usuário na tabela:', insertError.message)
+        }
       }
 
       return {}
     } catch (error) {
+      console.error('Erro no cadastro:', error)
       return { error: 'Erro ao criar conta' }
+    } finally {
+      setLoading(false)
     }
   }
 
   const signOut = async () => {
-    await supabase.auth.signOut()
+    try {
+      setLoading(true)
+      const { error } = await supabase.auth.signOut()
+
+      if (error) {
+        console.error('Erro no logout:', error.message)
+      }
+    } catch (error) {
+      console.error('Erro no logout:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   const isAdmin = userData?.tipo === 'admin'
