@@ -39,8 +39,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [userData, setUserData] = useState<UsuarioData | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const fetchUserData = async (userId: string) => {
+  const fetchUserData = async (userId: string): Promise<UsuarioData | null> => {
     try {
+      console.log('Buscando dados do usuário:', userId)
       const { data, error } = await supabase
         .from('usuarios')
         .select('*')
@@ -48,11 +49,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         .single()
 
       if (error) {
-        console.error('Erro ao buscar dados do usuário:', error.message)
+        console.error('Erro ao buscar dados do usuário:', error.message, error)
         return null
       }
 
-      return data
+      console.log('Dados do usuário encontrados:', data)
+      return data as UsuarioData
     } catch (error) {
       console.error('Erro ao buscar dados do usuário:', error)
       return null
@@ -115,17 +117,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(session?.user ?? null)
         
         if (session?.user && event === 'SIGNED_IN') {
+          setLoading(true)
           const userData = await fetchUserData(session.user.id)
+          console.log('UserData after fetch:', userData)
           setUserData(userData)
           
           if (userData) {
             await updateLastAccess(userData.id)
           }
+          setLoading(false)
         } else if (event === 'SIGNED_OUT') {
           setUserData(null)
+          setLoading(false)
+        } else {
+          setLoading(false)
         }
-        
-        setLoading(false)
       }
     )
 
@@ -134,8 +140,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      setLoading(true)
-      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -146,13 +150,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { error: error.message }
       }
 
-      // O onAuthStateChange vai lidar com o resto
+      // O onAuthStateChange vai lidar com o resto do loading
       return {}
     } catch (error) {
       console.error('Erro no login:', error)
       return { error: 'Erro ao fazer login' }
-    } finally {
-      setLoading(false)
     }
   }
 

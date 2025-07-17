@@ -50,7 +50,7 @@ export default function AdminDashboard() {
         return
       }
 
-      setUsuarios(data || [])
+      setUsuarios((data || []) as Usuario[])
     } catch (error) {
       console.error('Erro ao buscar usuários:', error)
     } finally {
