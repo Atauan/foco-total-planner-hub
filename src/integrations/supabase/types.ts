@@ -101,6 +101,10 @@ export type Database = {
         Args: { tamanho?: number }
         Returns: string
       }
+      is_admin_user: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
       is_user_active: {
         Args: { user_id: string }
         Returns: boolean
